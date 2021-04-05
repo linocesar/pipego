@@ -22,6 +22,7 @@ Na tela 2 a janela de gerenciamento das cepas para análise.
 * `dataset` é a janela de gereciamento das cepas como mostra a tela 2
 
 O PGAP oferece 5 análises: `cluster`, `pangenome`, `variation`, `evolution` e `function`. Pode-se usar de acordo com a necessidade.<br>
+O Campo `metódo` oferece duas opções: `GF` - gene family e `MP` - multiparanoid. Apenas uma pode ser selecionada por job.<br> 
 O campo `número de threads`: número de processadores que serão utilizados pelo PGAP. <br>
 O campo `identidade` é a identidade minima no alinhamento entre duas proteínas homólogas.<br>
 O campo `cobertura` é a cobertura mínima no alinhamento entre duas proteínas homólogas.<br>
