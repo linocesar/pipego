@@ -26,6 +26,6 @@ O campo `identidade` é a identidade minima no alinhamento entre duas proteínas
 O campo `cobertura` é a cobertura mínima no alinhamento entre duas proteínas homólogas.<br>
 O campo `e-value` é utilizada como parâmetro de corte no BLAST.<br>
 O campo `email` não é obrigátorio. Caso utilize é necessária uma configuração prévia de um serviço de e-mail.<br>
-O botão `GO` finaliza a interface e executa o PGAP com os dados de entrada selecioandos e parâmetros fixados.<br>
+O botão `GO` finaliza a interface e executa o PGAP via terminal com os dados de entrada selecionados e parâmetros fixados na interface gráfica.<br>
 
 ### Para Utilizar a interface é necessária que O PGAP esteja corretamente configurado previamente com todas as dependências sanadas. 
