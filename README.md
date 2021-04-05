@@ -30,4 +30,4 @@ O campo `e-value` é utilizada como parâmetro de corte no BLAST.<br>
 O campo `email` não é obrigátorio. Caso utilize é necessária uma configuração prévia de um serviço de e-mail.<br>
 O botão `GO` finaliza a interface e executa o PGAP via terminal com os dados de entrada selecionados e parâmetros fixados na interface gráfica.<br>
 
-### Para Utilizar a interface é necessária que O PGAP esteja corretamente configurado previamente com todas as dependências sanadas. 
+### Para Utilizar a interface é necessária que O PGAP esteja corretamente configurado previamente com todas as dependências sanadas. Vide manual do PGAP para maiores detalhes de configuração.
