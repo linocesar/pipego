@@ -1,10 +1,11 @@
   #!/usr/bin/perl -w
   #Desenvolvedor: Lino Cesar
   #Interface grafica para o PGAP
+  #https://github.com/linocesar/pipego.git
 
   use warnings;
   use strict;
-  use Cwd qw(cwd);
+  use Cwd;
   use Tk;
   use Encode qw(encode decode);
   use Tk::NoteBook;
@@ -43,16 +44,48 @@
   my ($btt1, $btt2, $btt3, $btt4, $btt5);
 
   my $mw = MainWindow->new;
+  
+  # splash screen
+  
+  use Tk::Animation;
+  use Tk::Splashscreen;
+  $mw->withdraw;
+  my $splash = $mw->Splashscreen(-milliseconds => 5000);
+  my $animate;
+  my $gif;
+  eval{
+    $gif = getcwd.'/icon.gif';
+    $animate = $splash->Animation(-format => 'gif', -file => $gif);
+  };
+  if($@){
+   $gif = Tk->findINC('anim.gif');
+   $animate = $splash->Animation(-format => 'gif', -file => $gif);
+  }
+
+  $animate = $splash->Animation(-format => 'gif', -file => $gif);
+  $splash->Label(-image => $animate)->pack;
+  $animate->set_image(0);
+  $animate->start_animation(50);
+  $splash->Splash;		# show Splashscreen
+  $mw->after(1000);
+  $splash->Destroy;		# tear down Splashscreen
+  $mw->deiconify;			# show calculator
+
+  
+ 
   my $noteframe = $mw->Frame();
   my $main_menu = $mw->Menu();
   my $output_frame = $mw->Frame();
   my $msg_label = $mw->Label(-textvariable => \$message)->pack(-side=>'bottom', -fill=>'x');
 
 
-  $mw->configure(-title=> "PGAP GO! v. 1.0.0",-background => 'white');
-  $mw->minsize(810,590);
+  $mw->configure(-title=> "PIPE GO! v1.0",-background => 'white');
+  $mw->minsize(1000,590);
   $mw->geometry("810x590+300+20");
   $mw->optionAdd('*font' => 'Roboto 9 bold');
+
+  #splash screen
+
   #cria menu
   $mw->configure(-menu=>$main_menu);
   $main_menu->configure(-background=>'white', -relief=>'sunken', -borderwidth=>0.5, -activeborderwidth=>0.5);
@@ -66,7 +99,7 @@
 
   $main_menu->command(-label=>"Sobre",
                       -underline => 0,
-                      -command=>sub{$mw->messageBox(-message=>decode('utf-8',"PGAP GO!\nVersion: 1.0.0\nDeveloper: Lino Cesar (github.com/linocesar)\nLab. de Genômica e Biologia de Sistemas\nLicenca: MIT"),
+                      -command=>sub{$mw->messageBox(-message=>decode('utf-8',"PIPE GO!\nVersion: 1.0.0\nDeveloper: Lino Cesar (github.com/linocesar)\nLab. de Genômica e Biologia de Sistemas\nLicenca: MIT"),
                                                     -type => "ok",-bg=>'white',
                                                     -width=>40)});
 
@@ -226,9 +259,9 @@
   #############################NOTE REPORT#########################
   my $frame_report = $mw->Frame(-borderwidth=>2);
   $frame_report = $tab2->add("Report", -label=>"report");
-  $frame_report->configure(-bg=>'SkyBlue');
+  $frame_report->configure(-bg=>'white');
 
-  $frame_report->Label(-text=>'teste')->pack(-side=>'top');
+  $frame_report->Label(-text=>'')->pack(-side=>'top');
 
 
 
@@ -271,7 +304,7 @@
     my $eval = &get_evalue;
 
     #exec("perl PGAP.pl -strains " . &get_strains . " -input $input -output $output ".&get_funcoes." -method ".&get_metodo." --thread ".&get_numeroprocess." --id ".&get_id." --cov ".&get_cov." --evalue ".&get_evalue." | tar -cjf report.tar.bz2 " .&getoutputdir." | echo 'PIPEGO REPORT' | mail -a report.tar.bz2 -s 'Job Done!' ".&getEmail);
-    exec("perl PGAP.pl -strains ".&get_strains." -input $input -output $output $f -method $met --thread $t --id $indentity --cov $coverage --evalue $eval ; tar -cjf report.tar.bz2 ".&getoutputdir."; echo 'PIPEGO REPORT' | mail -a report.tar.bz2 -s 'JOB DONE!' ".&getEmail);
+    exec("perl PGAP.pl -strains ".&get_strains." -input $input -output $output $f -method $met --thread $t --id $indentity --cov $coverage --evalue $eval");
 
   }
 
@@ -323,7 +356,7 @@
 
   sub open_dir {
 
-    $output = $mw->chooseDirectory(-initialdir => '~/PGAP-1.2.1/', -title => 'Escolha o diretorio de saida');
+    $output = $mw->chooseDirectory(-initialdir => getcwd, -title => 'Escolha o diretorio de saida');
 
     $lbout->configure(-text=> $output);
 
@@ -331,7 +364,7 @@
 
   sub open_dir_input { ## Falta tratamento para arquivo nao selecionado
 
-    $input = $mw->chooseDirectory(-initialdir => '~/PGAP-1.2.1/', -title => 'Escolha o diretorio de entrada de dados');
+    $input = $mw->chooseDirectory(-initialdir => getcwd, -title => 'Escolha o diretorio de entrada de dados');
     $lbin -> configure(-text => $input);
 
     if (Exists ($Toplevel)) {
@@ -353,7 +386,8 @@
       $Toplevel->title("DATASET");
       $Toplevel->geometry("450x420+300+20");
       $Toplevel->raise();
-
+      $Toplevel->protocol('WM_DELETE_WINDOW', sub{});
+      
     my $labelframe = $Toplevel->Labelframe(-width => 200, -height => 200, -text => 'Dataset')
                            ->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side=>'left');
 
