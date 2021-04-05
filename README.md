@@ -7,7 +7,8 @@
 #### Mover o conteúdo deste repositório para o diretório do PGAP. Adicione permissões necessárias para execução e no diretório PGAP execute o comando: 
 ```perl pipego.pl```
 #### A seguinte tela surgirá:
-![tela1](https://user-images.githubusercontent.com/790145/113528834-3a437880-9598-11eb-99fb-98d989e3b9c7.png)
+![tela1 1](https://user-images.githubusercontent.com/790145/113533154-9a8be780-95a3-11eb-94e1-cd6df0de5d4f.png)
+
 
 #### O campo `datasource`:
 * `input`  
